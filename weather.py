@@ -11,7 +11,7 @@ st.write(
 
 # Function to get weather data
 def get_weather(city):
-    api_key = "3c1d901aba98438bacb44730251302"  # API from weather API
+    api_key = "Enter your API"  # API from weather API
     base_url = f"http://api.weatherapi.com/v1/current.json?key={api_key}&q={city}&aqi=no"
     
     response = requests.get(base_url)

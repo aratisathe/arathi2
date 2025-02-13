@@ -1,17 +1,22 @@
 import streamlit as st
 import requests
+import os
 
 # Function to get weather data
 def get_weather(city, api_key):
-    url = f'http://api.weatherapi.com/v1/current.json?key={api_key}&q={city}&aqi=no'
-    response = requests.get(url)
-    return response.json()
+    try:
+        url = f'http://api.weatherapi.com/v1/current.json?key={api_key}&q={city}&aqi=no'
+        response = requests.get(url)
+        response.raise_for_status()  # Check for errors
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        return {"error": {"message": str(e)}}
 
 # Streamlit app
 def main():
     st.title("🌤 Real-Time Weather App")
 
-    api_key = '3b93ca110d739df5d1a4f77c90601119'  # Replace with your actual API key
+    api_key = os.getenv("WEATHER_API_KEY", "your_default_api_key")  # Get API key from env
 
     city = st.text_input("Enter city name")
 
